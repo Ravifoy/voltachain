@@ -1,0 +1,69 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root { color-scheme: dark; }
+
+html { scroll-behavior: smooth; }
+body {
+  background-color: #0a0f0d;
+  color: #e6f2ea;
+  font-family: Inter, system-ui, sans-serif;
+  /* faint circuit-board grid + soft green glow in the top corner */
+  background-image:
+    radial-gradient(ellipse 60% 40% at 15% -5%, rgba(34, 255, 136, 0.09), transparent 70%),
+    linear-gradient(rgba(34, 255, 136, 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(34, 255, 136, 0.045) 1px, transparent 1px);
+  background-size: 100% 100%, 44px 44px, 44px 44px;
+  background-attachment: fixed;
+}
+
+h1, h2, h3, .font-display { font-family: Orbitron, "Space Grotesk", sans-serif; letter-spacing: 0.01em; }
+
+@layer components {
+  .card { @apply rounded-2xl border border-line bg-panel/90 backdrop-blur p-5; }
+  .card-hover { @apply transition-all duration-300 hover:-translate-y-1 hover:border-volt/60 hover:shadow-glow; }
+  .btn { @apply inline-flex items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm font-semibold transition disabled:opacity-50 disabled:cursor-not-allowed; }
+  .btn-primary { @apply btn bg-volt text-ink hover:bg-volt2 hover:shadow-glow; }
+  .btn-ghost { @apply btn border border-line text-slate-200 hover:border-volt/60 hover:text-volt; }
+  .btn-bolt { @apply btn bg-bolt text-ink hover:brightness-110 hover:shadow-bolt; }
+  .input { @apply w-full rounded-xl border border-line bg-ink px-3 py-2.5 text-sm text-slate-100 outline-none transition placeholder:text-mute/60 focus:border-volt focus:shadow-glowSm; }
+  .label { @apply mb-1 block text-xs font-medium uppercase tracking-wider text-mute; }
+  .chip { @apply inline-flex items-center gap-1.5 rounded-full border border-volt/40 bg-volt/10 px-2.5 py-1 text-xs font-medium text-volt; }
+  .hash { @apply font-mono text-xs break-all text-slate-300; }
+}
+
+.text-glow { text-shadow: 0 0 18px rgba(34, 255, 136, 0.55); }
+.text-glow-bolt { text-shadow: 0 0 14px rgba(255, 214, 10, 0.6); }
+
+/* Animated energy wire (used between steps, blocks and in the timeline) */
+.wire-h {
+  height: 3px; border-radius: 3px;
+  background: linear-gradient(90deg, rgba(34,255,136,.15), #22ff88, rgba(34,255,136,.15));
+  background-size: 200% 100%; animation: flow 2s linear infinite;
+  box-shadow: 0 0 10px rgba(34,255,136,.5);
+}
+.wire-v {
+  width: 3px; border-radius: 3px;
+  background: linear-gradient(180deg, rgba(34,255,136,.15), #22ff88, rgba(34,255,136,.15));
+  background-size: 100% 200%; animation: flowv 2.4s linear infinite;
+  box-shadow: 0 0 10px rgba(34,255,136,.45);
+}
+@keyframes flow { from { background-position: 200% 0; } to { background-position: -200% 0; } }
+@keyframes flowv { from { background-position: 0 200%; } to { background-position: 0 -200%; } }
+
+/* MISMATCH: red flicker */
+@keyframes flicker { 0%,100% { opacity: 1 } 8% { opacity: .35 } 14% { opacity: 1 } 40% { opacity: .6 } 46% { opacity: 1 } 70% { opacity: .4 } 74% { opacity: 1 } }
+.flicker { animation: flicker 1.6s linear infinite; }
+
+@keyframes burst { 0% { transform: scale(.4); opacity: .9 } 100% { transform: scale(2.6); opacity: 0 } }
+.burst { animation: burst 1.1s ease-out forwards; }
+
+::-webkit-scrollbar { height: 8px; width: 8px; }
+::-webkit-scrollbar-thumb { background: #1f3328; border-radius: 8px; }
+::-webkit-scrollbar-thumb:hover { background: #2d5a40; }
+
+/* Map: darken the standard OpenStreetMap tiles to match the theme */
+.dark-tiles { filter: invert(1) hue-rotate(180deg) brightness(0.85) contrast(0.9) saturate(0.45); }
+.leaflet-container { background: #0a0f0d; font-family: Inter, sans-serif; }
+.leaflet-popup-content-wrapper { border-radius: 12px; }

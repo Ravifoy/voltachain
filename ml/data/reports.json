@@ -1,0 +1,134 @@
+{
+  "0x9d1e13cf579a835ebd867081d9bed7fdb272c73935b3f2eb205a1fdad32be9d0": {
+    "serialNumber": "VC-18650-0001",
+    "batteryType": "Li-ion 18650 cell",
+    "tokenId": 1,
+    "readings": {
+      "cycle_count": 180,
+      "age_months": 10,
+      "internal_resistance": 38,
+      "avg_temperature": 27,
+      "measured_capacity": 2850,
+      "nominal_capacity": 3000
+    },
+    "ml": {
+      "soh_percent": 93,
+      "grade": "A",
+      "remaining_life_months": 71,
+      "suggested_price_inr": 1560,
+      "explanation": "Grade A: excellent capacity left, with low wear on all indicators."
+    },
+    "inspector": "0x78F75b2E2205B596BAf8fEfC9bD1F8558482a91E",
+    "timestamp": "2026-10-17T10:58:36.838Z"
+  },
+  "0x3c4899d983eed1c0c1763890cb43c347bd8f84897aff2be98b0483e546134920": {
+    "serialNumber": "EB-PACK-0002",
+    "batteryType": "E-bike battery pack",
+    "tokenId": 2,
+    "readings": {
+      "cycle_count": 420,
+      "age_months": 22,
+      "internal_resistance": 52,
+      "avg_temperature": 31,
+      "measured_capacity": 8600,
+      "nominal_capacity": 10000
+    },
+    "ml": {
+      "soh_percent": 83.6,
+      "grade": "B",
+      "remaining_life_months": 55,
+      "suggested_price_inr": 4190,
+      "explanation": "Grade B: good capacity left, with low wear on all indicators."
+    },
+    "inspector": "0x78F75b2E2205B596BAf8fEfC9bD1F8558482a91E",
+    "timestamp": "2026-10-17T10:59:37.235Z"
+  },
+  "0x0c9901012f0eea10cdb011c96cb7f46d41d1bf810b94ce1324bbbc4add860d99": {
+    "serialNumber": "ES-PACK-0003",
+    "batteryType": "E-scooter battery pack",
+    "tokenId": 3,
+    "readings": {
+      "cycle_count": 700,
+      "age_months": 36,
+      "internal_resistance": 66,
+      "avg_temperature": 34,
+      "measured_capacity": 14600,
+      "nominal_capacity": 20000
+    },
+    "ml": {
+      "soh_percent": 72.6,
+      "grade": "B",
+      "remaining_life_months": 37,
+      "suggested_price_inr": 6320,
+      "explanation": "Grade B: good capacity left, but high cycle count and old age."
+    },
+    "inspector": "0x78F75b2E2205B596BAf8fEfC9bD1F8558482a91E",
+    "timestamp": "2026-10-17T11:01:12.974Z"
+  },
+  "0xe64cf385c7d31b63c85ad1ae852727e2f402c10d83a9abf0fbbef86cfa512499": {
+    "serialNumber": "LP-CELL-0004",
+    "batteryType": "Laptop battery cell",
+    "tokenId": 4,
+    "readings": {
+      "cycle_count": 950,
+      "age_months": 52,
+      "internal_resistance": 73,
+      "avg_temperature": 36,
+      "measured_capacity": 1590,
+      "nominal_capacity": 2600
+    },
+    "ml": {
+      "soh_percent": 62.4,
+      "grade": "C",
+      "remaining_life_months": 20,
+      "suggested_price_inr": 610,
+      "explanation": "Grade C: usable but noticeably worn, but high cycle count and old age."
+    },
+    "inspector": "0x78F75b2E2205B596BAf8fEfC9bD1F8558482a91E",
+    "timestamp": "2026-10-17T11:02:12.812Z"
+  },
+  "0xb63a0d13efb2172acf172d47bc8513ae824bcba52f3e433aa1512ac3a1a60770": {
+    "serialNumber": "PB-CELL-0005",
+    "batteryType": "Power bank cell",
+    "tokenId": 5,
+    "readings": {
+      "cycle_count": 1500,
+      "age_months": 72,
+      "internal_resistance": 105,
+      "avg_temperature": 44,
+      "measured_capacity": 1550,
+      "nominal_capacity": 5000
+    },
+    "ml": {
+      "soh_percent": 38.3,
+      "grade": "D",
+      "remaining_life_months": 0,
+      "suggested_price_inr": 440,
+      "explanation": "Grade D: very little life left - best sent for recycling, but high cycle count and old age."
+    },
+    "inspector": "0x78F75b2E2205B596BAf8fEfC9bD1F8558482a91E",
+    "timestamp": "2026-10-17T11:03:01.122Z"
+  },
+  "0xf0935824d9ff05611bc5908737f360440cb29de142023505f5681e8b367c4237": {
+    "serialNumber": "PH-CELL-0006",
+    "batteryType": "Phone Li-poly cell",
+    "tokenId": 6,
+    "readings": {
+      "cycle_count": 300,
+      "age_months": 18,
+      "internal_resistance": 44,
+      "avg_temperature": 29,
+      "measured_capacity": 3115,
+      "nominal_capacity": 3500
+    },
+    "ml": {
+      "soh_percent": 89.2,
+      "grade": "A",
+      "remaining_life_months": 65,
+      "suggested_price_inr": 1670,
+      "explanation": "Grade A: excellent capacity left, with low wear on all indicators."
+    },
+    "inspector": "0x78F75b2E2205B596BAf8fEfC9bD1F8558482a91E",
+    "timestamp": "2026-10-17T11:03:49.121Z"
+  }
+}

@@ -1,0 +1,16 @@
+node_modules/
+.next/
+artifacts/
+cache/
+typechain-types/
+logs/
+__pycache__/
+*.pyc
+.env
+.env.local
+ml/synthetic_battery_data.csv
+*.log
+
+.claude/
+*.tsbuildinfo
+ml/model.joblib
