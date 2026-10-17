@@ -2,7 +2,7 @@
 Generate a SYNTHETIC battery dataset and train a RandomForest to predict State of Health (SoH).
 
 IMPORTANT: the data below is simulated (not measured from real batteries). It follows
-simple, realistic Li-ion degradation trends so the demo behaves sensibly:
+simple, realistic Li-ion degradation trends so predictions behave sensibly:
   - more charge cycles  -> more capacity fade
   - older cells         -> more calendar ageing
   - hot operation       -> faster ageing

@@ -7,7 +7,7 @@ import { Copy, Check, Link2, Zap } from "lucide-react";
 import { roleOf, short } from "@/lib/config";
 import { CONTRACT_ADDRESS, getName } from "@/lib/chain";
 
-/** Wallet name (if the owner set one), or the demo role label, plus the address; links to the explorer. */
+/** Wallet name (if the owner set one), or a built-in test-account role label, plus the address; links to the explorer. */
 export function useName(address: string) {
   const [name, setName] = useState("");
   useEffect(() => { let on = true; getName(address).then((n) => on && setName(n)); return () => { on = false; }; }, [address]);

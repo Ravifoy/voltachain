@@ -64,7 +64,7 @@ function VerifyInner() {
     } catch { setParseErr("That isn't valid JSON — fix it and try again."); }
   };
 
-  // One-click tamper for the demo: change soh_percent to 95.
+  // One-click tamper: change soh_percent to 95 to see the mismatch.
   const tamper = () => {
     try { const j = JSON.parse(text); if (j.ml) j.ml.soh_percent = 95; setText(JSON.stringify(j, null, 2)); setResult(null); } catch { /* ignore */ }
   };

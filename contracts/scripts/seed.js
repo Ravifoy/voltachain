@@ -6,7 +6,7 @@ const hre = require("hardhat");
 const { ethers } = hre;
 
 const ML = process.env.ML_URL || "http://127.0.0.1:8000";
-const INR_PER_ETH = 200000; // demo exchange rate (same constant used in the frontend)
+const INR_PER_ETH = 200000; // fixed display rate (same constant used in the frontend)
 
 // serial, type, nominal mAh, readings, seller account index, list for sale?
 const SAMPLES = [
@@ -38,7 +38,7 @@ async function main() {
     await (await contract.connect(signers[2]).setName("GreenCell Recyclers")).wait();
     await (await contract.connect(signers[4]).setName("EcoPack Delhi")).wait();
   } else {
-    await (await contract.connect(signers[0]).setName("VoltaChain Demo")).wait(); // single wallet on a public testnet
+    await (await contract.connect(signers[0]).setName("VoltaChain Admin")).wait(); // single wallet on a public testnet
   }
 
   for (const [i, [serial, type, nominal, rd, sellerIdx, list]] of SAMPLES.entries()) {

@@ -103,7 +103,7 @@ export function friendlyError(e: any): string {
   return (e?.shortMessage || e?.message || String(e)).slice(0, 300);
 }
 
-/** Dry-run a call to learn the revert reason (used by the access-control demo). */
+/** Dry-run a call to learn the revert reason (used for the inspector access-control check). */
 export async function simulate(from: string, fnName: string, args: any[]): Promise<string | null> {
   try {
     // eth_call only reads state - nothing is sent or mined.

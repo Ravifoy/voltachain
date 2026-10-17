@@ -13,7 +13,7 @@ export const RPC_URL = process.env.NEXT_PUBLIC_RPC_URL || NETWORK.rpc;
 export const ML_URL = process.env.NEXT_PUBLIC_ML_URL || "http://127.0.0.1:8000";
 /** Link to the real Etherscan (only on public networks). */
 export const etherscan = (kind: "tx" | "address" | "block", v: string) => (NETWORK.explorer ? `${NETWORK.explorer}/${kind}/${v}` : null);
-/** Demo exchange rate so prices can be shown in INR next to ETH. */
+/** Fixed exchange rate so prices can be shown in INR next to ETH. */
 export const INR_PER_ETH = 200000;
 
 export const inr = (n: number) => "₹" + Math.round(n).toLocaleString("en-IN");
@@ -25,7 +25,7 @@ export const priceLabel = (wei: bigint) =>
 
 export const short = (s: string, a = 6, b = 4) => (s.length > a + b + 2 ? `${s.slice(0, a)}…${s.slice(-b)}` : s);
 
-/** Well-known Hardhat test accounts, labelled so the demo is easy to follow. */
+/** Well-known Hardhat test accounts, labelled for local development. */
 export const KNOWN_ACCOUNTS: Record<string, string> = {
   "0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266": "Admin",
   "0x70997970c51812dc3a010c7d01b50e0d17dc79c8": "Inspector",
