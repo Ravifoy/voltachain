@@ -62,7 +62,7 @@ export default function Inspector() {
     setState({ status: "pending", label: "Charging transaction…" });
     const args = [tokenId, Math.round(ml.soh_percent), ml.grade, Math.round(readings().cycle_count), hash];
     try {
-      // Access-control demo: dry-run first so we can show the exact revert reason for non-inspectors.
+      // Access control: dry-run first so we can show the exact revert reason for non-inspectors.
       const revertReason = await simulate(address, "addHealthReport", args);
       const c = await writeContract();
       if (revertReason) {
@@ -98,7 +98,7 @@ export default function Inspector() {
       <div className={`card mb-6 flex flex-wrap items-center gap-3 ${address && !isInspector ? "border-bolt/50" : ""}`}>
         {!address ? <><span className="text-mute">Connect your wallet to submit reports.</span><button className="btn-primary" onClick={connect}>Connect wallet</button></>
           : isInspector ? <><BadgeCheck className="h-5 w-5 text-volt" /><span>Connected as a <b className="text-volt">verified inspector</b></span><AddressChip address={address} /></>
-          : <><ShieldX className="h-5 w-5 text-bolt" /><span className="text-slate-200">This wallet is <b className="text-bolt">not</b> a verified inspector. You can still try to submit — the contract will reject it (access-control demo).</span><AddressChip address={address} /></>}
+          : <><ShieldX className="h-5 w-5 text-bolt" /><span className="text-slate-200">This wallet is <b className="text-bolt">not</b> a verified inspector. You can still try to submit — the contract will reject it and show the reason.</span><AddressChip address={address} /></>}
         {address && !chainOk && <button className="btn-bolt" onClick={switchNetwork}>Switch network</button>}
       </div>
 
