@@ -1,9 +1,7 @@
 "use client";
 import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
-import { PackagePlus, Tag, MapPin, UserRound, Camera } from "lucide-react";
-import BatteryPhoto from "@/components/BatteryPhoto";
-import { hashImage, resizeToDataUrl, saveImage } from "@/lib/image";
+import { PackagePlus, Tag, MapPin, UserRound } from "lucide-react";
 import BatteryIndicator from "@/components/BatteryIndicator";
 import GradeBadge from "@/components/GradeBadge";
 import TxPanel, { TxState } from "@/components/TxPanel";
@@ -14,44 +12,6 @@ import { inrToEth, priceLabel } from "@/lib/config";
 import { fetchReport } from "@/lib/report";
 import { useWallet } from "@/lib/wallet";
 import { parseEther } from "ethers";
-
-/** Owner adds a photo: resized in the browser, saved to the API, and its hash recorded on-chain. */
-function PhotoPicker({ item, onDone }: { item: BatteryFull; onDone: () => void }) {
-  const [preview, setPreview] = useState<string | null>(null);
-  const [err, setErr] = useState<string | null>(null);
-  const [state, setState] = useState<TxState>({ status: "idle" });
-  const pick = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const f = e.target.files?.[0]; setErr(null); setState({ status: "idle" });
-    if (!f) return;
-    if (!f.type.startsWith("image/")) return setErr("Please choose an image file.");
-    try { setPreview(await resizeToDataUrl(f)); } catch (x: any) { setErr(x.message || "Could not read that image."); }
-  };
-  const upload = async () => {
-    if (!preview) return;
-    setState({ status: "pending", label: "Charging transaction…" });
-    try {
-      const hash = hashImage(preview);
-      await saveImage(hash, preview);
-      const c = await writeContract();
-      const tx = await runTx(() => c.setImage(item.battery.tokenId, hash));
-      setState({ status: "success", title: "Photo saved", tx });
-      setPreview(null); onDone();
-    } catch (x) { setState({ status: "error", message: friendlyError(x) }); }
-  };
-  return (
-    <div className="space-y-2">
-      <label className="label flex items-center gap-1"><Camera className="h-3.5 w-3.5" /> Battery photo {item.imageHash && <span className="normal-case text-volt">· added</span>}</label>
-      {item.imageHash && !preview && <BatteryPhoto hash={item.imageHash} className="h-32 w-full rounded-xl" />}
-      {preview && <img src={preview} alt="Preview" className="h-32 w-full rounded-xl object-cover" />}
-      <div className="flex gap-2">
-        <input type="file" accept="image/*" onChange={pick} className="input file:mr-3 file:rounded-lg file:border-0 file:bg-volt/20 file:px-3 file:py-1 file:text-volt" />
-        <button className="btn-ghost shrink-0" disabled={!preview || state.status === "pending"} onClick={upload}>{item.imageHash ? "Replace" : "Upload"}</button>
-      </div>
-      {err && <p className="text-xs text-redx">{err}</p>}
-      <TxPanel state={state} />
-    </div>
-  );
-}
 
 /** Owner picks the city where the battery is; it appears on the marketplace map. */
 function LocationPicker({ item, onDone }: { item: BatteryFull; onDone: () => void }) {
@@ -104,7 +64,6 @@ function ListRow({ item, onDone }: { item: BatteryFull; onDone: () => void }) {
       </div>
       {r && <BatteryIndicator percent={r.sohPercent} size="sm" />}
       <LocationPicker item={item} onDone={onDone} />
-      <PhotoPicker item={item} onDone={onDone} />
       {!r && <p className="text-sm text-bolt">Waiting for a verified inspector to add a health report before you can list it.</p>}
       {r && item.listing.active && <p className="text-sm text-bolt">Listed at {priceLabel(item.listing.price)}</p>}
       {r && !item.listing.active && (

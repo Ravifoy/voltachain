@@ -1,7 +1,6 @@
 """VoltaChain ML + report-storage API (FastAPI). Run: uvicorn app:app --port 8000"""
 import json
 import os
-import re
 from pathlib import Path
 
 import joblib
@@ -94,39 +93,6 @@ def get_report(report_hash: str):
     if report_hash.lower() not in data:
         raise HTTPException(404, "Report not found")
     return data[report_hash.lower()]
-
-
-# ---- Battery photos: stored by content hash (the hash is also stored on-chain) ----
-IMAGES_DIR = BASE / "data" / "images"
-HASH_RE = re.compile(r"^0x[0-9a-fA-F]{64}$")
-DATA_URL_RE = re.compile(r"^data:image/(jpeg|png|webp);base64,[A-Za-z0-9+/=]+$")
-MAX_IMAGE_CHARS = 700_000  # ~500 KB; the frontend resizes photos well below this
-
-
-class ImageIn(BaseModel):
-    hash: str   # keccak256 of the data URL string, computed by the frontend
-    data: str   # the photo as a data URL
-
-
-@app.post("/images")
-def save_image(body: ImageIn):
-    if not HASH_RE.match(body.hash):
-        raise HTTPException(400, "Bad hash")
-    if len(body.data) > MAX_IMAGE_CHARS or not DATA_URL_RE.match(body.data):
-        raise HTTPException(400, "Photo must be a JPEG/PNG/WebP under ~500 KB")
-    IMAGES_DIR.mkdir(parents=True, exist_ok=True)
-    (IMAGES_DIR / f"{body.hash.lower()}.txt").write_text(body.data)
-    return {"saved": True, "hash": body.hash.lower()}
-
-
-@app.get("/images/{image_hash}")
-def get_image(image_hash: str):
-    if not HASH_RE.match(image_hash):
-        raise HTTPException(400, "Bad hash")
-    p = IMAGES_DIR / f"{image_hash.lower()}.txt"
-    if not p.exists():
-        raise HTTPException(404, "Photo not found")
-    return {"data": p.read_text()}
 
 
 @app.get("/health")
