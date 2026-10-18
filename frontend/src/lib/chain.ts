@@ -1,5 +1,5 @@
 // All blockchain access lives here: read-only provider, contract helpers, tx runner, data loaders.
-import { BrowserProvider, Contract, JsonRpcProvider, ContractTransactionResponse, Interface } from "ethers";
+import { BrowserProvider, Contract, JsonRpcProvider, ContractTransactionResponse, Interface, ZeroHash } from "ethers";
 import deployment from "@/contracts/VoltaChain.json";
 import { CHAIN_ID, DEPLOY_BLOCK, RPC_URL } from "./config";
 
@@ -25,7 +25,7 @@ export type Report = { sohPercent: number; grade: string; cycleCount: number; re
 export type Listing = { price: bigint; active: boolean };
 export type OwnerRec = { owner: string; timestamp: number; blockNumber: number };
 export type Loc = { city: string; lat: number; lng: number } | null;
-export type BatteryFull = { battery: Battery; owner: string; reports: Report[]; listing: Listing; history: OwnerRec[]; location: Loc };
+export type BatteryFull = { battery: Battery; owner: string; reports: Report[]; listing: Listing; history: OwnerRec[]; location: Loc; imageHash: string | null };
 export type TxInfo = { hash: string; blockNumber: number; blockHash: string; gasUsed: string; status: number };
 
 const toBattery = (b: any): Battery => ({
@@ -40,12 +40,14 @@ const toReport = (r: any): Report => ({
 /** Load everything we know about one battery from the contract's view functions. */
 export async function loadBattery(tokenId: number): Promise<BatteryFull> {
   const c = readContract();
-  const [b, owner, reports, listing, history, loc] = await Promise.all([
+  const [b, owner, reports, listing, history, loc, img] = await Promise.all([
     c.getBattery(tokenId), c.ownerOf(tokenId), c.getReports(tokenId), c.getListing(tokenId), c.getOwnerHistory(tokenId), c.getLocation(tokenId),
+    c.getImageHash(tokenId).catch(() => ZeroHash), // older deployments have no photo support
   ]);
   return {
     battery: toBattery(b), owner, reports: reports.map(toReport),
     listing: { price: listing.price, active: listing.active },
+    imageHash: img && img !== ZeroHash ? img : null,
     location: loc.isSet ? { city: loc.city, lat: Number(loc.latE6) / 1e6, lng: Number(loc.lngE6) / 1e6 } : null,
     history: history.map((h: any) => ({ owner: h.owner, timestamp: Number(h.timestamp), blockNumber: Number(h.blockNumber) })),
   };

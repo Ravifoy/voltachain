@@ -5,6 +5,7 @@ import { Zap, Clock, MapPin, UserRound } from "lucide-react";
 import BatteryIndicator from "./BatteryIndicator";
 import GradeBadge from "./GradeBadge";
 import { VerifiedChip, useName } from "./bits";
+import BatteryPhoto from "./BatteryPhoto";
 import type { BatteryFull } from "@/lib/chain";
 import { priceLabel } from "@/lib/config";
 
@@ -16,6 +17,7 @@ export default function BatteryCard({ item, onBuy, index = 0 }: { item: BatteryF
   const owner = useName(item.owner);
   return (
     <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: index * 0.07 }} className="card card-hover flex flex-col gap-4">
+      {item.imageHash && <BatteryPhoto hash={item.imageHash} className="-mx-1 -mt-1 h-40 rounded-xl" />}
       <div className="flex items-start justify-between gap-3">
         <div className="min-w-0">
           <p className="truncate font-display text-sm font-bold text-white">{item.battery.batteryType}</p>

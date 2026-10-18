@@ -57,6 +57,14 @@ describe("VoltaChain", () => {
     await expect(c.connect(seller).setLocation(1, "X", 99000000, 0)).to.be.revertedWith("Bad coordinates");
   });
 
+  it("owner can attach a photo hash; others cannot", async () => {
+    const h = ethers.keccak256(ethers.toUtf8Bytes("photo"));
+    await expect(c.connect(buyer).setImage(1, h)).to.be.revertedWith("Only owner can set photo");
+    await expect(c.connect(seller).setImage(1, ethers.ZeroHash)).to.be.revertedWith("Photo hash required");
+    await expect(c.connect(seller).setImage(1, h)).to.emit(c, "ImageSet").withArgs(1, h);
+    expect(await c.getImageHash(1)).to.equal(h);
+  });
+
   it("buy transfers NFT, pays seller, records history", async () => {
     await c.connect(inspector).addHealthReport(1, 82, "B", 300, hash);
     const price = ethers.parseEther("1");
