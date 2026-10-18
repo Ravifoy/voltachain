@@ -62,7 +62,6 @@ contract VoltaChain is ERC721, Ownable, ReentrancyGuard {
     mapping(uint256 => OwnerRecord[]) private _ownerHistory;
     mapping(uint256 => Listing) private _listings;
     mapping(uint256 => Location) private _locations;
-    mapping(uint256 => bytes32) private _imageHash;     // keccak256 of the battery photo (photo itself is off-chain)
     mapping(address => string) public displayName;      // optional human-readable name per wallet
 
     // ---------- Events ----------
@@ -73,7 +72,6 @@ contract VoltaChain is ERC721, Ownable, ReentrancyGuard {
     event Sold(uint256 indexed tokenId, address indexed from, address indexed to, uint256 price);
     event NameSet(address indexed user, string name);
     event LocationSet(uint256 indexed tokenId, string city);
-    event ImageSet(uint256 indexed tokenId, bytes32 imageHash);
 
     constructor() ERC721("VoltaChain Battery", "VOLT") Ownable(msg.sender) {}
 
@@ -99,14 +97,6 @@ contract VoltaChain is ERC721, Ownable, ReentrancyGuard {
         require(bytes(city).length > 0 && bytes(city).length <= 48, "City must be 1-48 characters");
         _locations[tokenId] = Location(city, latE6, lngE6, true);
         emit LocationSet(tokenId, city);
-    }
-
-    /// @notice Owner attaches a photo fingerprint. Anyone can re-hash the photo to check it was not swapped.
-    function setImage(uint256 tokenId, bytes32 imageHash) external {
-        require(ownerOf(tokenId) == msg.sender, "Only owner can set photo");
-        require(imageHash != bytes32(0), "Photo hash required");
-        _imageHash[tokenId] = imageHash;
-        emit ImageSet(tokenId, imageHash);
     }
 
     // ---------- Seller ----------
@@ -194,8 +184,6 @@ contract VoltaChain is ERC721, Ownable, ReentrancyGuard {
     function getReports(uint256 tokenId) external view returns (HealthReport[] memory) { return _reports[tokenId]; }
 
     function getOwnerHistory(uint256 tokenId) external view returns (OwnerRecord[] memory) { return _ownerHistory[tokenId]; }
-
-    function getImageHash(uint256 tokenId) external view returns (bytes32) { return _imageHash[tokenId]; }
 
     function getLocation(uint256 tokenId) external view returns (Location memory) { return _locations[tokenId]; }
 

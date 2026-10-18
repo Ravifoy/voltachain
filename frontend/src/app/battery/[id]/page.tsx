@@ -7,7 +7,6 @@ import BatteryIndicator from "@/components/BatteryIndicator";
 import GradeBadge from "@/components/GradeBadge";
 import BuyModal from "@/components/BuyModal";
 import Timeline from "@/components/Timeline";
-import BatteryPhoto from "@/components/BatteryPhoto";
 import ChargingLoader from "@/components/ChargingLoader";
 import { AddressChip, ChainDown } from "@/components/bits";
 import { remainingMonths } from "@/components/BatteryCard";
@@ -69,8 +68,6 @@ export default function BatteryDetail() {
           </div>
         </div>
       </section>
-
-      {data.imageHash && <BatteryPhoto hash={data.imageHash} className="h-72 w-full rounded-2xl border border-line md:h-96" />}
 
       {last && (
         <section className="grid gap-5 md:grid-cols-3">

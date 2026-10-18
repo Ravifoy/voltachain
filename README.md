@@ -12,7 +12,6 @@ Used batteries often have years of life left, but buyers can't verify how much. 
 - **AI grading:** a RandomForest model predicts State of Health (SoH) and returns a grade (A ≥ 85, B 70–84, C 50–69, D < 50), estimated remaining life, a suggested price and a one-line explanation.
 - **Built-in explorer:** blocks linked by parent hash, transactions with decoded function names and event logs, search by tx hash / block / address, live refresh.
 - **Marketplace map:** listed batteries shown by city on an OpenStreetMap-based map.
-- **Battery photos:** owners can add a photo. It is resized in the browser, stored by the API under its keccak256 hash, and only the hash is recorded on-chain (`setImage`). The site re-hashes every photo before showing it and refuses to display one that does not match.
 - **Wallet names:** wallets can set an optional public display name.
 - **Prices in INR and ETH**, success receipts with tx hash, block number, block hash and gas for every action.
 
@@ -108,8 +107,7 @@ Notes on the free hosting tiers: Render's free instances sleep when idle and use
 - **Grading and pricing:** remaining life = `(SoH − 50) / 0.6` months (capped at 120); suggested price = ₹600 per Ah of nominal capacity × (SoH/100)². These are simple heuristics.
 - **Currency:** a fixed rate of 1 ETH = ₹200,000 is used for display (`frontend/src/lib/config.ts`).
 - **Trust model:** the blockchain proves that a given inspector submitted an exact report and that it has not changed; it cannot prove the inspector measured honestly. The admin approves inspectors (single trusted party; multisig or governance would be the next step). The contract can add but not remove inspectors.
-- **Names and locations are self-reported** and not verified. Photos are tamper-evident (hash on-chain) but show what the owner uploaded, not proof the photo is of that battery.
-- **Photo storage:** photos live on the API server disk (`ml/data/images/`). On free hosting that disk is temporary, so photos can disappear after a restart; the on-chain hash remains and the site shows "Photo unavailable". Use IPFS or object storage for production.
+- **Names and locations are self-reported** and not verified.
 - **Contract is unaudited**; deployed to a testnet only.
 - **Failed-transaction display:** the Inspector page dry-runs the call (`eth_call`) to show the contract's revert reason for non-inspectors, then sends the transaction with a fixed gas limit so it is mined and fails on-chain; the explorer shows it with status *Failed*.
 

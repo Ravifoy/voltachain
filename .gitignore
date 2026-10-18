@@ -14,4 +14,3 @@ ml/synthetic_battery_data.csv
 .claude/
 *.tsbuildinfo
 ml/model.joblib
-ml/data/images/
