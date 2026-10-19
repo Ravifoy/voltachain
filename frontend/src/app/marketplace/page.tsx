@@ -12,7 +12,7 @@ import { BatteryFull, loadListed } from "@/lib/chain";
 const BatteryMap = dynamic(() => import("@/components/BatteryMap"), { ssr: false, loading: () => <ChargingLoader label="Loading map…" /> });
 
 export default function Marketplace() {
-  const [view, setView] = useState<"grid" | "map">("grid");
+  const [view, setView] = useState<"grid" | "map">("map");
   const [items, setItems] = useState<BatteryFull[] | null>(null);
   const [err, setErr] = useState<string | null>(null);
   const [buying, setBuying] = useState<BatteryFull | null>(null);
@@ -21,7 +21,7 @@ export default function Marketplace() {
     loadListed().then((l) => { setItems(l); setErr(null); }).catch((e) => setErr(e.message));
   }, []);
   useEffect(load, [load]);
-  useEffect(() => { if (new URLSearchParams(window.location.search).get("view") === "map") setView("map"); }, []);
+  useEffect(() => { if (new URLSearchParams(window.location.search).get("view") === "grid") setView("grid"); }, []);
 
   return (
     <>
